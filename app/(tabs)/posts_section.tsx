@@ -29,7 +29,7 @@ import React from "react";
 import { Switch } from "tamagui";
 import { addPost } from "@/store/slices/postsSlice";
 
-export default function Posts() {
+export default function PostsSection() {
   const [open, setOpen] = useState<boolean>(false);
   const [modal, setModal] = useState(true);
   const [snapPointsMode, setSnapPointsMode] =
@@ -80,15 +80,9 @@ export default function Posts() {
     if (
       !title.trim() ||
       !description.trim ||
-      selectedFiles?.length == 0 || !levelValue.trim()
+      selectedFiles?.length == 0 ||
+      !levelValue.trim()
     ) {
-      setNative(true);
-    console.log({
-        title,
-        description,
-        selectedFiles,
-        levelValue
-    })
       if (toast)
         toast.show("Please Check you form", {
           message: "Help",
@@ -105,9 +99,8 @@ export default function Posts() {
           levelValue,
         })
       );
-         setOpen(false);
-
-    } 
+      setOpen(false);
+    }
   };
   const data = useAppSelector((state) => state.posts);
   const currentToast = useToastState();
@@ -222,7 +215,12 @@ export default function Posts() {
                 Title
               </Label>
               <YStack flex={1} space={"$1"}>
-                <Input flex={1} id="title" defaultValue="" onChangeText={(e)=>setTitle(e)} />
+                <Input
+                  flex={1}
+                  id="title"
+                  defaultValue=""
+                  onChangeText={(e) => setTitle(e)}
+                />
               </YStack>
             </XStack>
             <XStack ai="center" gap="$4">

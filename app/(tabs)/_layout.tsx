@@ -1,10 +1,10 @@
-import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
+import React from 'react';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Link, Tabs} from 'expo-router';
 import { Pressable } from "react-native";
-import Colors from "@/constants/Colors";
-import { useColorScheme } from "@/components/useColorScheme";
-import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import Colors from '@/constants/Colors';
+import {useColorScheme} from '@/components/useColorScheme';
+import {useClientOnlyValue} from '@/components/useClientOnlyValue';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -27,6 +27,13 @@ export default function TabLayout() {
         name="posts"
         options={{
           title: "Iyed",
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+           <Tabs.Screen
+        name="posts_section"
+        options={{
+          title: "Posts",
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
