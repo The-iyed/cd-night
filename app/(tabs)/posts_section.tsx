@@ -1,5 +1,6 @@
 import { SetStateAction, useMemo, useState } from "react";
 import {
+  Avatar,
   Button,
   H2,
   H3,
@@ -34,6 +35,7 @@ import { addPost } from "@/store/slices/postsSlice";
 import { Alert, StyleSheet } from "react-native";
 
 export default function PostsSection() {
+  const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
   const [modal, setModal] = useState(true);
   const [snapPointsMode, setSnapPointsMode] =
@@ -112,7 +114,6 @@ export default function PostsSection() {
   };
   const data = useAppSelector((state) => state.posts);
   const currentToast = useToastState();
-  console.log(data?.data);
   return (
     <View style={{ flex: 1, paddingBottom: 10, padding: 10 }}>
       <YStack space alignItems="center">
@@ -335,6 +336,22 @@ export default function PostsSection() {
                 <H3 color={"white"} textAlign="center">
                   {el?.title}
                 </H3>
+                <View
+                  onPress={() => router.push(`/Profile/${el.author.id!}`)}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 2,
+                  }}
+                >
+                  <Avatar circular size="$2">
+                    <Avatar.Image
+                      accessibilityLabel="Cam"
+                      src={el.author.avatar}
+                    />
+                  </Avatar>
+                </View>
                 <H5 color={"white"} fontWeight={"$4"}>
                   {el?.level}
                 </H5>
@@ -418,6 +435,7 @@ export const items = [
 
 import { Download } from "@tamagui/lucide-icons";
 import * as Permissions from "expo-permissions";
+import { useRouter } from "expo-router";
 
 const DownloadButton = ({ uri, filename }: any) => {
   const downloadFile = async () => {
@@ -432,7 +450,6 @@ const DownloadButton = ({ uri, filename }: any) => {
         FileSystem.documentDirectory + filename,
         {}
       );
-
       console.log("File downloaded successfully:", downloadUri);
       Alert.alert(
         "Download Complete!",
