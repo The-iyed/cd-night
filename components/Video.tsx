@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 import { ResizeMode, Video } from "expo-av";
 import { Avatar, Button, Image, Paragraph, Text, Tooltip, View } from "tamagui";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { router } from "expo-router";
 
 export const VideoCard = ({
   videoSrc,
@@ -10,6 +11,7 @@ export const VideoCard = ({
   description,
   name,
   tags,
+  author,
 }: any) => {
   const video = React.useRef<any>(null);
   const [status, setStatus] = React.useState<any>({});
@@ -43,6 +45,20 @@ export const VideoCard = ({
             alignItems: "flex-start",
           }}
         >
+          <View
+            onPress={() => router.push(`/${author?.id ?? ""}`)}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Avatar circular size="$2">
+              <Avatar.Image accessibilityLabel="Cam" src={author.avatar} />
+            </Avatar>
+            <Text style={{ fontSize: 10 }}>{author.userName}</Text>
+          </View>
           <View style={{ position: "relative" }}>
             <View
               onTouchEnd={() => {
@@ -64,22 +80,6 @@ export const VideoCard = ({
                 color="white"
               />
             </View>
-          </View>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 2,
-            }}
-          >
-            <Avatar circular size="$2">
-              <Avatar.Image
-                accessibilityLabel="Cam"
-                src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
-              />
-            </Avatar>
-            <Text style={{ fontSize: 10 }}>teacher name</Text>
           </View>
         </View>
         <View style={styles.detailsContainer}>
@@ -125,6 +125,7 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
   },
   detailsContainer: {
+    alignSelf: "flex-end",
     display: "flex",
     flexDirection: "column",
     gap: 5,
