@@ -1,5 +1,5 @@
 import {useState, useEffect, FC} from 'react';
-import {Text} from 'tamagui';
+import {ScrollView, Text} from 'tamagui';
 import {View} from 'react-native';
 
 interface TypewriterProps {
@@ -29,9 +29,9 @@ const Typewriter: FC<TypewriterProps> = ({text, delay, infinite}) => {
         return () => clearTimeout(timeout);
     }, [currentIndex, delay, infinite, text]);
     return (
-        <View style={{ backgroundColor : '#fafafa' , borderRadius : 5 , padding : 5 , marginTop : 20}}>
+        <ScrollView contentContainerStyle={{ backgroundColor : '#fafafa' , borderRadius : 5 , padding : 5 , marginTop : 20,paddingBottom:500}} >
             <Text style={{paddingTop: 10,color:"#000"}}>{currentText}</Text>
-        </View>
+        </ScrollView>
     );
 }
 
