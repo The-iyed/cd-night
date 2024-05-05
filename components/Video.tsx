@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 import { ResizeMode, Video } from "expo-av";
 import { Avatar, Button, Image, Paragraph, Text, Tooltip, View } from "tamagui";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 
 export const VideoCard = ({
   videoSrc,
@@ -15,6 +15,9 @@ export const VideoCard = ({
 }: any) => {
   const video = React.useRef<any>(null);
   const [status, setStatus] = React.useState<any>({});
+  const router = useRouter()
+
+
   return (
     <View style={{ flexShrink: 1 }}>
       <Video
@@ -46,7 +49,7 @@ export const VideoCard = ({
           }}
         >
           <View
-            onPress={() => router.push(`/${author?.id ?? ""}`)}
+            onPress={() => router.push(`/Profile/${author.id!}`)}
             style={{
               display: "flex",
               flexDirection: "row",

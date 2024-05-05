@@ -1,9 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import { ResizeMode, Video } from "expo-av";
 import { VideoCard } from "@/components/Video";
 import { Image, Input, ScrollView, YStack } from "tamagui";
 import Colors from "@/constants/Colors";
+//@ts-ignore
 import loader from "@/assets/images/search.gif";
 import { posts } from "@/data/posts";
 
@@ -97,7 +97,7 @@ function searchVideos(searchTerm: string, videos: any[]) {
     return videos;
   }
 
-  const results = videos.filter((video) => {
+  const results = videos.filter(video => {
     const loweredName = video.name.toLowerCase();
     const loweredDescription = video.description.toLowerCase();
     const loweredTags = video.tags.map((tag: any) => tag.toLowerCase());

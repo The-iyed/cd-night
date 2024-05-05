@@ -1,12 +1,7 @@
-import {Button} from 'react-native';
-import {ScrollView, Text, View} from 'tamagui';
-import {ImagePickerExample} from '@/components/ImagePicker';
-import {useState} from 'react';
+import { Typewriter } from '@/components/typeWriter';
 import axios from 'axios';
-import {ImagePickerAsset} from 'expo-image-picker/src/ImagePicker.types';
-import LottieView from 'lottie-react-native';
-import {Typewriter} from '@/components/typeWriter';
-import {YoutubeTranscript} from 'youtube-transcript';
+import { ImagePickerAsset } from 'expo-image-picker/src/ImagePicker.types';
+import { useState } from 'react';
 
 export default function Posts() {
     const [image, setImage] = useState<ImagePickerAsset | null>(null);
