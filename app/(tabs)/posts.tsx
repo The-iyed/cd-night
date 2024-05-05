@@ -1,33 +1,7 @@
-import { SetStateAction, useMemo, useState } from "react";
-import {
-  Button,
-  Input,
-  Label,
-  ScrollView,
-  Sheet,
-  Text,
-  TextArea,
-  View,
-  XStack,
-  YStack,
-} from "tamagui";
-const spModes = ["percent", "constant", "fit", "mixed"] as const;
-import * as DocumentPicker from "expo-document-picker";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { SelectDemoItem } from "@/components/SelectDemoItem";
-import {
-  Toast,
-  ToastProvider,
-  ToastViewport,
-  useToastState,
-} from "@tamagui/toast";
-
-import { useToastController } from "@tamagui/toast";
-
-import React from "react";
-
-import { Switch } from "tamagui";
-import { addPost } from "@/store/slices/postsSlice";
+import { Typewriter } from '@/components/typeWriter';
+import axios from 'axios';
+import { ImagePickerAsset } from 'expo-image-picker/src/ImagePicker.types';
+import { useState } from 'react';
 
 export default function Posts() {
   const [open, setOpen] = useState<boolean>(false);

@@ -1,14 +1,18 @@
 import * as React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import { ResizeMode, Video } from "expo-av";
 import { VideoCard } from "@/components/Video";
-import { Input, ScrollView, YStack } from "tamagui";
+import { Image, Input, ScrollView, YStack } from "tamagui";
 import Colors from "@/constants/Colors";
+//@ts-ignore
+import loader from "@/assets/images/search.gif";
+import { posts } from "@/data/posts";
 
 export default () => {
-  const [videos, setVideos] = React.useState(allVideos);
+  const [loading, setLoading] = React.useState(false);
+  const [videos, setVideos] = React.useState(posts);
   return (
     <View>
+      {/* <CameraComp /> */}
       <Input
         placeholder="Search "
         size="$4"
@@ -19,32 +23,57 @@ export default () => {
           borderColor: Colors.light.text,
         }}
         onChangeText={(e) => {
+          if (e !== "") {
+            setLoading(true);
+          }
+
           setVideos(searchVideos(e, videos));
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         }}
       />
-      <ScrollView>
-        <YStack
-          paddingTop={10}
-          paddingBottom={100}
-          gap={20}
-          display="flex"
-          justifyContent="flex-start"
-          alignItems="flex-start"
+      {loading ? (
+        <View
+          style={{
+            height: 500,
+            width: Dimensions.get("window").width,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
         >
-          {videos.map(
-            ({ videoSrc, thumbnailSrc, description, name, tags }, index) => (
-              <VideoCard
-                videoSrc={videoSrc}
-                thumbnailSrc={thumbnailSrc}
-                description={description}
-                name={name}
-                tags={tags}
-                key={index}
-              />
-            )
-          )}
-        </YStack>
-      </ScrollView>
+          <Image style={{ width: 150, height: 150 }} src={loader} />
+        </View>
+      ) : (
+        <ScrollView>
+          <YStack
+            paddingTop={10}
+            paddingBottom={100}
+            gap={20}
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
+            {videos.map(
+              (
+                { videoSrc, thumbnailSrc, description, name, tags, author },
+                index
+              ) => (
+                <VideoCard
+                  author={author}
+                  videoSrc={videoSrc}
+                  thumbnailSrc={thumbnailSrc}
+                  description={description}
+                  name={name}
+                  tags={tags}
+                  key={index}
+                />
+              )
+            )}
+          </YStack>
+        </ScrollView>
+      )}
     </View>
   );
 };
@@ -61,14 +90,14 @@ const styles = StyleSheet.create({
   },
 });
 function searchVideos(searchTerm: string, videos: any[]) {
-  if (searchTerm === "") return allVideos;
+  if (searchTerm === "") return posts;
   searchTerm = searchTerm?.toLowerCase();
 
   if (!searchTerm) {
     return videos;
   }
 
-  const results = videos.filter((video) => {
+  const results = videos.filter(video => {
     const loweredName = video.name.toLowerCase();
     const loweredDescription = video.description.toLowerCase();
     const loweredTags = video.tags.map((tag: any) => tag.toLowerCase());
@@ -83,31 +112,3 @@ function searchVideos(searchTerm: string, videos: any[]) {
 
   return results;
 }
-const allVideos = [
-  {
-    videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-    thumbnailSrc:
-      "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
-    name: "course",
-    tags: ["bac fn", "bac sc", "bac math", "bac info", "bac eco"],
-  },
-  {
-    videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-    thumbnailSrc:
-      "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description:
-      "In this video, we'll talk about the best way to learn English on your own. And I’ll show you the free courses, podcasts and books that can help you reach a C2 level of English- and beyond!",
-    name: "How to Learn English On Your Own ",
-    tags: ["bac fn", "bac sc", "bac math", "bac info", "bac eco"],
-  },
-  {
-    videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-    thumbnailSrc:
-      "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description:
-      "In this video, we'll talk about the best way to learn English on your own. And I’ll show you the free courses, podcasts and books that can help you reach a C2 level of English- and beyond!",
-    name: "How to Learn English On Your Own ",
-    tags: ["bac fn", "bac sc", "bac math", "bac info", "bac eco"],
-  },
-];

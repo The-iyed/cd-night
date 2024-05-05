@@ -128,6 +128,7 @@ export default function PostsSection() {
         Welcome to posts section where you can share your knowledge with your
         friends
       </Text>
+      
       <View
         style={{
           display: "flex",
@@ -144,10 +145,10 @@ export default function PostsSection() {
           onPress={() => setOpen(true)}
         >
           + Add Post
-        </Button>
-      </View>
+        </Button>     
 
-      <Sheet
+      </View>
+     {open &&  <Sheet
         forceRemoveScrollEnabled={open}
         modal={modal}
         open={open}
@@ -313,7 +314,27 @@ export default function PostsSection() {
             </View>
           </ScrollView>
         </Sheet.Frame>
-      </Sheet>
+      </Sheet>         
+      }
+           <Text
+        style={{ textAlign: "center", width: "100%", fontWeight: "300" }}
+        marginTop={15}
+        fontSize={"$4"}
+      >
+        Welcome to posts section where you can share your knowledge with your
+        friends
+      </Text>
+      <Text color={"white"}>lsqjdmfmqsdlkfjlkqjsdmlkfjqmsldkjmflkqjsmdlkjflmqksjdf</Text>
+      <YStack space={"$3"}>
+        {
+          data?.data.map((el:any,index:number)=>{
+            console.log('===>',el)
+            return <XStack flex={1} key={index}>
+                <Text color={"white"}>{el?.description}</Text>
+            </XStack>
+          })
+        }
+      </YStack>
     </View>
   );
 }
