@@ -6,8 +6,7 @@ import { Image, StyleSheet } from "react-native";
 import { Avatar, Button } from "tamagui";
 export default function ProfilePage({ id }: { id: null | string }) {
   const [followed, setFollow] = useState(false);
-  const profile = findUser(`${id ?? "00001"}`);
-
+  const profile = findUser(`${id ?? "0001"}`);
   return (
     <View style={styles.container}>
       <View style={{ ...styles.flexColumn, ...styles.header }}>

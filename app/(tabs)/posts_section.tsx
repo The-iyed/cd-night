@@ -351,6 +351,7 @@ export default function PostsSection() {
                       src={el.author.avatar}
                     />
                   </Avatar>
+                  <Text>{el.author.userName}</Text>
                 </View>
                 <H5 color={"white"} fontWeight={"$4"}>
                   {el?.level}
