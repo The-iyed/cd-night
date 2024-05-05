@@ -1,6 +1,9 @@
 import { SetStateAction, useMemo, useState } from "react";
 import {
   Button,
+  H2,
+  H3,
+  H5,
   Input,
   Label,
   ScrollView,
@@ -21,13 +24,14 @@ import {
   ToastViewport,
   useToastState,
 } from "@tamagui/toast";
-
+import * as FileSystem from "expo-file-system";
 import { useToastController } from "@tamagui/toast";
 
 import React from "react";
 
 import { Switch } from "tamagui";
 import { addPost } from "@/store/slices/postsSlice";
+import { Alert, StyleSheet } from "react-native";
 
 export default function PostsSection() {
   const [open, setOpen] = useState<boolean>(false);
@@ -95,19 +99,22 @@ export default function PostsSection() {
         addPost({
           title,
           description,
-          selectedFiles,
-          levelValue,
+          files: selectedFiles,
+          level: levelValue,
         })
       );
       setOpen(false);
+      setDescription("");
+      setLevel("");
+      setSelectedFiles([]);
+      setTitle("");
     }
   };
   const data = useAppSelector((state) => state.posts);
   const currentToast = useToastState();
-
-  const [native, setNative] = useState(false);
+  console.log(data?.data);
   return (
-    <View>
+    <View style={{ flex: 1, paddingBottom: 10, padding: 10 }}>
       <YStack space alignItems="center">
         <CurrentToast />
       </YStack>
@@ -230,7 +237,6 @@ export default function PostsSection() {
                 </Label>
                 <YStack flex={1} space={"$1"}>
                   <SelectDemoItem
-                    id="select-demo-1"
                     onValueChange={(e) => {
                       setLevel(e);
                     }}
@@ -263,7 +269,7 @@ export default function PostsSection() {
                   <View display="flex" space="$3" padding={5}>
                     {selectedFiles.map((file, index: number) => (
                       <View
-                        key={file.name}
+                        key={index}
                         flex={1}
                         display="flex"
                         alignItems="center"
@@ -316,22 +322,60 @@ export default function PostsSection() {
           </Sheet.Frame>
         </Sheet>
       )}
-
-      <YStack space={"$3"}>
-        {data?.data.map((el: any, index: number) => {
-          console.log("===>", el);
-          return (
-            <XStack flex={1} key={index}>
-              <Text color={"white"}>{el?.description}</Text>
-            </XStack>
-          );
-        })}
-      </YStack>
+      <ScrollView marginTop={15} space={"$5"} paddingBottom={0}>
+        {data?.data?.length > 0 &&
+          data?.data?.map((el: any, index: number) => {
+            return (
+              <View
+                borderColor={"white"}
+                borderWidth={0.5}
+                padding={12}
+                borderRadius={10}
+              >
+                <H3 color={"white"} textAlign="center">
+                  {el?.title}
+                </H3>
+                <H5 color={"white"} fontWeight={"$4"}>
+                  {el?.level}
+                </H5>
+                <Text color={"white"}>{el?.description}</Text>
+                {el?.files && el?.files?.length > 0 && (
+                  <View display="flex" space="$3" padding={5}>
+                    {el?.files.map((file: any, index: number) => (
+                      <View
+                        key={index}
+                        flex={1}
+                        display="flex"
+                        alignItems="center"
+                        flexDirection="row"
+                        justifyContent="space-between"
+                        borderBlockColor={"white"}
+                        borderWidth={2}
+                        borderRadius={12}
+                        padding={5}
+                        paddingLeft={10}
+                        borderColor={"white"}
+                      >
+                        <Text width={285} fontSize={10}>
+                          {file?.filename}
+                        </Text>
+                        <DownloadButton
+                          uri={file?.uri}
+                          filename={file?.filename}
+                        />
+                      </View>
+                    ))}
+                  </View>
+                )}
+              </View>
+            );
+          })}
+      </ScrollView>
     </View>
   );
 }
 
-export const CurrentToast = () => {
+const CurrentToast = () => {
   const currentToast = useToastState();
   if (!currentToast || currentToast.isHandledNatively) return null;
 
@@ -357,20 +401,88 @@ export const CurrentToast = () => {
     </Toast>
   );
 };
-;
-
-
 export const items = [
   { name: "Bac Math" },
   { name: "Bac Economie et Gestion" },
   { name: "2éme année" },
   { name: "7 ème De base" },
-  { name: "2 ème Secondaire Informatique"},
-  { name: "3 ème Secondaire Techniques"},
-  { name: "3 ème secondaire Lettres"},
-  { name: "Bac Sciences Exp"},
-  { name: "Bac Reo Paramédical"},
-  { name: "3 ème Secondaire Mathématiques"},
+  { name: "2 ème Secondaire Informatique" },
+  { name: "3 ème Secondaire Techniques" },
+  { name: "3 ème secondaire Lettres" },
+  { name: "Bac Sciences Exp" },
+  { name: "Bac Reo Paramédical" },
+  { name: "3 ème Secondaire Mathématiques" },
   { name: "السّادسة 6 ابتدائي" },
-  { name: "1 ère Secondaire"}
+  { name: "1 ère Secondaire" },
 ];
+
+import { Download } from "@tamagui/lucide-icons";
+import * as Permissions from "expo-permissions";
+
+const DownloadButton = ({ uri, filename }: any) => {
+  const downloadFile = async () => {
+    try {
+      const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+      if (status !== "granted") {
+        console.error("Storage permission not granted!");
+        return;
+      }
+      const { uri: downloadUri } = await FileSystem.downloadAsync(
+        uri,
+        FileSystem.documentDirectory + filename,
+        {}
+      );
+
+      console.log("File downloaded successfully:", downloadUri);
+      Alert.alert(
+        "Download Complete!",
+        `${filename} has been downloaded successfully.`
+      );
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      Alert.alert(
+        "Download Error!",
+        "There was an error downloading the file. Please try again later."
+      );
+    }
+  };
+
+  return (
+    <Button
+      onPress={downloadFile}
+      style={styles.downloadButton}
+      icon={<Download />}
+    ></Button>
+  );
+};
+const styles = StyleSheet.create({
+  fileList: {
+    display: "flex",
+    flexDirection: "column",
+    space: 3,
+    padding: 5,
+  },
+  fileItem: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBlockColor: "white",
+    borderWidth: 2,
+    borderRadius: 12,
+    padding: 5,
+    paddingLeft: 10,
+    borderColor: "white",
+    marginBottom: 5,
+  },
+  fileName: {
+    width: 285,
+    fontSize: 10,
+  },
+  downloadButton: {
+    backgroundColor: "#3498db",
+  },
+  deleteButton: {
+    backgroundColor: "transparent",
+  },
+});
