@@ -1,6 +1,9 @@
 import { SetStateAction, useMemo, useState } from "react";
 import {
   Button,
+  H2,
+  H3,
+  H5,
   Input,
   Label,
   ScrollView,
@@ -11,7 +14,7 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-const spModes = ["percent", "constant", "fit", "mixed"] as const;
+export const spModes = ["percent", "constant", "fit", "mixed"] as const;
 import * as DocumentPicker from "expo-document-picker";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { SelectDemoItem } from "@/components/SelectDemoItem";
@@ -21,13 +24,14 @@ import {
   ToastViewport,
   useToastState,
 } from "@tamagui/toast";
-
+import * as FileSystem from "expo-file-system";
 import { useToastController } from "@tamagui/toast";
 
 import React from "react";
 
 import { Switch } from "tamagui";
 import { addPost } from "@/store/slices/postsSlice";
+import { Alert, StyleSheet } from "react-native";
 
 export default function PostsSection() {
   const [open, setOpen] = useState<boolean>(false);
@@ -95,19 +99,22 @@ export default function PostsSection() {
         addPost({
           title,
           description,
-          selectedFiles,
-          levelValue,
+          files: selectedFiles,
+          level: levelValue,
         })
       );
       setOpen(false);
+      setDescription("");
+      setLevel("");
+      setSelectedFiles([]);
+      setTitle("");
     }
   };
   const data = useAppSelector((state) => state.posts);
   const currentToast = useToastState();
-
-  const [native, setNative] = useState(false);
+  console.log(data?.data);
   return (
-    <View>
+    <View style={{ flex: 1, paddingBottom: 10, padding: 10 }}>
       <YStack space alignItems="center">
         <CurrentToast />
       </YStack>
@@ -128,7 +135,7 @@ export default function PostsSection() {
         Welcome to posts section where you can share your knowledge with your
         friends
       </Text>
-      
+
       <View
         style={{
           display: "flex",
@@ -145,204 +152,228 @@ export default function PostsSection() {
           onPress={() => setOpen(true)}
         >
           + Add Post
-        </Button>     
-
+        </Button>
       </View>
-     {open &&  <Sheet
-        forceRemoveScrollEnabled={open}
-        modal={modal}
-        open={open}
-        onOpenChange={setOpen}
-        snapPoints={snapPoints}
-        snapPointsMode={snapPointsMode}
-        dismissOnSnapToBottom
-        position={position}
-        onPositionChange={setPosition}
-        zIndex={100_000}
-        animation="medium"
-      >
-        <Sheet.Overlay
-          animation="lazy"
-          enterStyle={{ opacity: 0 }}
-          exitStyle={{ opacity: 0 }}
-        />
-        <Sheet.Handle backgroundColor={"white"} />
-        <Sheet.Frame
-          padding="$4"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          space="$5"
-          borderTopColor={"white"}
-          borderWidth="$-1"
+      {open && (
+        <Sheet
+          forceRemoveScrollEnabled={open}
+          modal={modal}
+          open={open}
+          onOpenChange={setOpen}
+          snapPoints={snapPoints}
+          snapPointsMode={snapPointsMode}
+          dismissOnSnapToBottom
+          position={position}
+          onPositionChange={setPosition}
+          zIndex={100_000}
+          animation="medium"
         >
-          <ScrollView width={"100%"} display="flex" space="$2">
-            {currentToast && currentToast.isHandledNatively && (
-              <Toast
-                key={currentToast?.id}
-                duration={currentToast?.duration}
-                enterStyle={{ opacity: 0, scale: 0.5, y: -25 }}
-                exitStyle={{ opacity: 0, scale: 1, y: -20 }}
-                y={0}
-                opacity={1}
-                scale={1}
-                animation="100ms"
-                viewportName={currentToast?.viewportName}
-                zIndex={989898989}
-              >
-                <YStack>
-                  <Toast.Title>{currentToast?.title}</Toast.Title>
+          <Sheet.Overlay
+            animation="lazy"
+            enterStyle={{ opacity: 0 }}
+            exitStyle={{ opacity: 0 }}
+          />
+          <Sheet.Handle backgroundColor={"white"} />
+          <Sheet.Frame
+            padding="$4"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            space="$5"
+            borderTopColor={"white"}
+            borderWidth="$-1"
+          >
+            <ScrollView width={"100%"} display="flex" space="$2">
+              {currentToast && currentToast.isHandledNatively && (
+                <Toast
+                  key={currentToast?.id}
+                  duration={currentToast?.duration}
+                  enterStyle={{ opacity: 0, scale: 0.5, y: -25 }}
+                  exitStyle={{ opacity: 0, scale: 1, y: -20 }}
+                  y={0}
+                  opacity={1}
+                  scale={1}
+                  animation="100ms"
+                  viewportName={currentToast?.viewportName}
+                  zIndex={989898989}
+                >
+                  <YStack>
+                    <Toast.Title>{currentToast?.title}</Toast.Title>
 
-                  {!!currentToast?.message && (
-                    <Toast.Description>
-                      {currentToast.message}
-                    </Toast.Description>
-                  )}
-                </YStack>
-              </Toast>
-            )}
-            <Text
-              style={{
-                textAlign: "center",
-                width: "100%",
-                fontWeight: "300",
-              }}
-              marginTop={15}
-              fontSize={"$5"}
-            >
-              Create Your Post
-            </Text>
-            <XStack alignItems="center" space="$5">
-              <Label width={90} htmlFor="title">
-                Title
-              </Label>
-              <YStack flex={1} space={"$1"}>
-                <Input
-                  flex={1}
-                  id="title"
-                  defaultValue=""
-                  onChangeText={(e) => setTitle(e)}
-                />
-              </YStack>
-            </XStack>
-            <XStack ai="center" gap="$4">
-              <Label htmlFor="select-demo-1" f={1} width={90}>
-                Level
-              </Label>
-              <YStack flex={1} space={"$1"}>
-                <SelectDemoItem
-                  id="select-demo-1"
-                  onValueChange={(e) => {
-                    setLevel(e);
-                  }}
-                />
-              </YStack>
-            </XStack>
-            <XStack alignItems="flex-start" space="$5">
-              <Label width={90} htmlFor="desc">
-                Description
-              </Label>
-
-              <YStack flex={1} space={"$1"}>
-                <TextArea
-                  borderWidth={2}
-                  defaultValue=""
-                  flex={1}
-                  placeholder="Enter you description"
-                  margin={0}
-                  paddingTop={-5}
-                  onChangeText={(e) => setDescription(e)}
-                />
-              </YStack>
-            </XStack>
-            <XStack alignItems="center" space="$5">
-              <Button onPress={pickDocuments}>Pick Files</Button>
-            </XStack>
-            {selectedFiles.length > 0 && (
-              <>
-                <Text>Selected Files:</Text>
-                <View display="flex" space="$3" padding={5}>
-                  {selectedFiles.map((file, index: number) => (
-                    <View
-                      key={file.name}
-                      flex={1}
-                      display="flex"
-                      alignItems="center"
-                      flexDirection="row"
-                      justifyContent="space-between"
-                      borderBlockColor={"white"}
-                      borderWidth={2}
-                      borderRadius={12}
-                      padding={5}
-                      paddingLeft={10}
-                      borderColor={"white"}
-                    >
-                      <Text width={285} fontSize={10}>
-                        {file?.name}
-                      </Text>
-                      <Button
-                        onPress={() => deleteFile(index)}
-                        color="white"
-                        fontSize={"$1"}
-                        backgroundColor={"transparent"}
-                      >
-                        X
-                      </Button>
-                    </View>
-                  ))}
-                </View>
-              </>
-            )}
-            <View
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                width: "95%",
-                alignItems: "flex-end",
-              }}
-              marginTop={"$5"}
-            >
-              <Button
-                backgroundColor={"white"}
-                color={"black"}
-                width={"$11"}
-                onPress={() => {
-                  handleSubmit();
+                    {!!currentToast?.message && (
+                      <Toast.Description>
+                        {currentToast.message}
+                      </Toast.Description>
+                    )}
+                  </YStack>
+                </Toast>
+              )}
+              <Text
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  fontWeight: "300",
                 }}
+                marginTop={15}
+                fontSize={"$5"}
               >
-                Submit
-              </Button>
-            </View>
-          </ScrollView>
-        </Sheet.Frame>
-      </Sheet>         
-      }
-           <Text
-        style={{ textAlign: "center", width: "100%", fontWeight: "300" }}
-        marginTop={15}
-        fontSize={"$4"}
-      >
-        Welcome to posts section where you can share your knowledge with your
-        friends
-      </Text>
-      <Text color={"white"}>lsqjdmfmqsdlkfjlkqjsdmlkfjqmsldkjmflkqjsmdlkjflmqksjdf</Text>
-      <YStack space={"$3"}>
-        {
-          data?.data.map((el:any,index:number)=>{
-            console.log('===>',el)
-            return <XStack flex={1} key={index}>
+                Create Your Post
+              </Text>
+              <XStack alignItems="center" space="$5">
+                <Label width={90} htmlFor="title">
+                  Title
+                </Label>
+                <YStack flex={1} space={"$1"}>
+                  <Input
+                    flex={1}
+                    id="title"
+                    defaultValue=""
+                    onChangeText={(e) => setTitle(e)}
+                  />
+                </YStack>
+              </XStack>
+              <XStack ai="center" gap="$4">
+                <Label htmlFor="select-demo-1" f={1} width={90}>
+                  Level
+                </Label>
+                <YStack flex={1} space={"$1"}>
+                  <SelectDemoItem
+                    onValueChange={(e) => {
+                      setLevel(e);
+                    }}
+                  />
+                </YStack>
+              </XStack>
+              <XStack alignItems="flex-start" space="$5">
+                <Label width={90} htmlFor="desc">
+                  Description
+                </Label>
+
+                <YStack flex={1} space={"$1"}>
+                  <TextArea
+                    borderWidth={2}
+                    defaultValue=""
+                    flex={1}
+                    placeholder="Enter you description"
+                    margin={0}
+                    paddingTop={-5}
+                    onChangeText={(e) => setDescription(e)}
+                  />
+                </YStack>
+              </XStack>
+              <XStack alignItems="center" space="$5">
+                <Button onPress={pickDocuments}>Pick Files</Button>
+              </XStack>
+              {selectedFiles.length > 0 && (
+                <>
+                  <Text>Selected Files:</Text>
+                  <View display="flex" space="$3" padding={5}>
+                    {selectedFiles.map((file, index: number) => (
+                      <View
+                        key={index}
+                        flex={1}
+                        display="flex"
+                        alignItems="center"
+                        flexDirection="row"
+                        justifyContent="space-between"
+                        borderBlockColor={"white"}
+                        borderWidth={2}
+                        borderRadius={12}
+                        padding={5}
+                        paddingLeft={10}
+                        borderColor={"white"}
+                      >
+                        <Text width={285} fontSize={10}>
+                          {file?.name}
+                        </Text>
+                        <Button
+                          onPress={() => deleteFile(index)}
+                          color="white"
+                          fontSize={"$1"}
+                          backgroundColor={"transparent"}
+                        >
+                          X
+                        </Button>
+                      </View>
+                    ))}
+                  </View>
+                </>
+              )}
+              <View
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  width: "95%",
+                  alignItems: "flex-end",
+                }}
+                marginTop={"$5"}
+              >
+                <Button
+                  backgroundColor={"white"}
+                  color={"black"}
+                  width={"$11"}
+                  onPress={() => {
+                    handleSubmit();
+                  }}
+                >
+                  Submit
+                </Button>
+              </View>
+            </ScrollView>
+          </Sheet.Frame>
+        </Sheet>
+      )}
+      <ScrollView marginTop={15} space={"$5"} paddingBottom={0}>
+        {data?.data?.length > 0 &&
+          data?.data?.map((el: any, index: number) => {
+            return (
+              <View
+                borderColor={"white"}
+                borderWidth={0.5}
+                padding={12}
+                borderRadius={10}
+              >
+                <H3 color={"white"} textAlign="center">
+                  {el?.title}
+                </H3>
+                <H5 color={"white"} fontWeight={"$4"}>
+                  {el?.level}
+                </H5>
                 <Text color={"white"}>{el?.description}</Text>
-            </XStack>
-          })
-        }
-      </YStack>
+                {el?.files && el?.files?.length > 0 && (
+                  <View display="flex" space="$3" padding={5}>
+                    {el?.files.map((file: any, index: number) => (
+                      <View
+                        key={index}
+                        flex={1}
+                        display="flex"
+                        alignItems="center"
+                        flexDirection="row"
+                        justifyContent="space-between"
+                        borderBlockColor={"white"}
+                        borderWidth={2}
+                        borderRadius={12}
+                        padding={5}
+                        paddingLeft={10}
+                        borderColor={"white"}
+                      >
+                        <Text width={285} fontSize={10}>
+                          {file?.filename}
+                        </Text>
+                        <DownloadButton
+                          uri={file?.uri}
+                          filename={file?.filename}
+                        />
+                      </View>
+                    ))}
+                  </View>
+                )}
+              </View>
+            );
+          })}
+      </ScrollView>
     </View>
   );
 }
-
-export const items = [
-  { name: "Bac Math" },
-  { name: "Bac Economie et Gestion" },
-];
 
 const CurrentToast = () => {
   const currentToast = useToastState();
@@ -370,75 +401,88 @@ const CurrentToast = () => {
     </Toast>
   );
 };
-const ToastControl = ({
-  native,
-  message,
-}: {
-  native: boolean;
-  message?: string;
-}) => {
-  const toast = useToastController();
+export const items = [
+  { name: "Bac Math" },
+  { name: "Bac Economie et Gestion" },
+  { name: "2éme année" },
+  { name: "7 ème De base" },
+  { name: "2 ème Secondaire Informatique" },
+  { name: "3 ème Secondaire Techniques" },
+  { name: "3 ème secondaire Lettres" },
+  { name: "Bac Sciences Exp" },
+  { name: "Bac Reo Paramédical" },
+  { name: "3 ème Secondaire Mathématiques" },
+  { name: "السّادسة 6 ابتدائي" },
+  { name: "1 ère Secondaire" },
+];
+
+import { Download } from "@tamagui/lucide-icons";
+import * as Permissions from "expo-permissions";
+
+const DownloadButton = ({ uri, filename }: any) => {
+  const downloadFile = async () => {
+    try {
+      const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+      if (status !== "granted") {
+        console.error("Storage permission not granted!");
+        return;
+      }
+      const { uri: downloadUri } = await FileSystem.downloadAsync(
+        uri,
+        FileSystem.documentDirectory + filename,
+        {}
+      );
+
+      console.log("File downloaded successfully:", downloadUri);
+      Alert.alert(
+        "Download Complete!",
+        `${filename} has been downloaded successfully.`
+      );
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      Alert.alert(
+        "Download Error!",
+        "There was an error downloading the file. Please try again later."
+      );
+    }
+  };
 
   return (
-    <XStack space="$2" justifyContent="center">
-      <Button
-        onPress={() => {
-          toast.show("Success !", {
-            message: message || "Everything in order",
-            native,
-          });
-        }}
-      >
-        Show
-      </Button>
-
-      <Button
-        onPress={() => {
-          toast.hide();
-        }}
-      >
-        Hide
-      </Button>
-    </XStack>
+    <Button
+      onPress={downloadFile}
+      style={styles.downloadButton}
+      icon={<Download />}
+    ></Button>
   );
 };
-const NativeOptions = ({
-  native,
-
-  setNative,
-}: {
-  native: boolean;
-
-  setNative: (native: boolean) => void;
-}) => {
-  return (
-    <XStack space="$3">
-      <Label size="$1" onPress={() => setNative(false)}>
-        Custom
-      </Label>
-
-      <Switch
-        id="native-toggle"
-        nativeID="native-toggle"
-        theme="active"
-        size="$1"
-        checked={!!native}
-        onCheckedChange={(val) => setNative(val)}
-      >
-        <Switch.Thumb
-          animation={[
-            "quick",
-            {
-              transform: {
-                overshootClamping: true,
-              },
-            },
-          ]}
-        />
-      </Switch>
-      <Label size="$1" onPress={() => setNative(true)}>
-        Native
-      </Label>
-    </XStack>
-  );
-};
+const styles = StyleSheet.create({
+  fileList: {
+    display: "flex",
+    flexDirection: "column",
+    space: 3,
+    padding: 5,
+  },
+  fileItem: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBlockColor: "white",
+    borderWidth: 2,
+    borderRadius: 12,
+    padding: 5,
+    paddingLeft: 10,
+    borderColor: "white",
+    marginBottom: 5,
+  },
+  fileName: {
+    width: 285,
+    fontSize: 10,
+  },
+  downloadButton: {
+    backgroundColor: "#3498db",
+  },
+  deleteButton: {
+    backgroundColor: "transparent",
+  },
+});
