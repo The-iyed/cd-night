@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 import { ResizeMode, Video } from "expo-av";
 import { Avatar, Button, Image, Paragraph, Text, Tooltip, View } from "tamagui";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { useRouter } from "expo-router";
 
 export const VideoCard = ({
   videoSrc,
@@ -10,9 +11,13 @@ export const VideoCard = ({
   description,
   name,
   tags,
+  id
 }: any) => {
   const video = React.useRef<any>(null);
   const [status, setStatus] = React.useState<any>({});
+  const router = useRouter()
+
+
   return (
     <View style={{ flexShrink: 1 }}>
       <Video
@@ -72,6 +77,7 @@ export const VideoCard = ({
               alignItems: "center",
               gap: 2,
             }}
+            onPress={()=>router.push(`/Profile/${id!}`)}
           >
             <Avatar circular size="$2">
               <Avatar.Image

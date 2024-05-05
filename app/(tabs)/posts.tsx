@@ -17,7 +17,7 @@ export default function Posts() {
                 }
             }}/>
             <Text>{process.env?.EXPO_PUBLIC_API_KEY}</Text>
-            <ImagePickerExample image={image} setImage={setImage}/>
+            <ImagePickerExample image={image} setImage={setImage} />
         </View>
     )
 }

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
-import { ResizeMode, Video } from "expo-av";
 import { VideoCard } from "@/components/Video";
 import { Input, ScrollView, YStack } from "tamagui";
 import Colors from "@/constants/Colors";
@@ -18,7 +17,7 @@ export default () => {
         focusStyle={{
           borderColor: Colors.light.text,
         }}
-        onChangeText={(e) => {
+        onChangeText={e => {
           setVideos(searchVideos(e, videos));
         }}
       />
@@ -29,16 +28,19 @@ export default () => {
           gap={20}
           display="flex"
           justifyContent="flex-start"
-          alignItems="flex-start"
-        >
+          alignItems="flex-start">
           {videos.map(
-            ({ videoSrc, thumbnailSrc, description, name, tags }, index) => (
+            (
+              { videoSrc, thumbnailSrc, description, name, tags, author },
+              index
+            ) => (
               <VideoCard
                 videoSrc={videoSrc}
                 thumbnailSrc={thumbnailSrc}
                 description={description}
                 name={name}
                 tags={tags}
+                id={author?.id}
                 key={index}
               />
             )
@@ -68,7 +70,7 @@ function searchVideos(searchTerm: string, videos: any[]) {
     return videos;
   }
 
-  const results = videos.filter((video) => {
+  const results = videos.filter(video => {
     const loweredName = video.name.toLowerCase();
     const loweredDescription = video.description.toLowerCase();
     const loweredTags = video.tags.map((tag: any) => tag.toLowerCase());
