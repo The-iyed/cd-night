@@ -6,17 +6,7 @@
         "Stack": {
           "staticConfig": {
             "acceptsClassName": true,
-            "defaultProps": {
-              "display": "flex",
-              "alignItems": "stretch",
-              "flexDirection": "column",
-              "flexBasis": "auto",
-              "boxSizing": "border-box",
-              "position": "relative",
-              "minHeight": 0,
-              "minWidth": 0,
-              "flexShrink": 0
-            },
+            "defaultProps": {},
             "validStyles": {
               "enterStyle": true,
               "exitStyle": true,
@@ -24,7 +14,6 @@
               "pressStyle": true,
               "focusStyle": true,
               "disabledStyle": true,
-              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -105,7 +94,6 @@
               "color": true,
               "textDecorationColor": true,
               "textShadowColor": true,
-              "outlineColor": true,
               "borderRadius": true,
               "borderTopLeftRadius": true,
               "borderTopRightRadius": true,
@@ -165,24 +153,7 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true,
-              "borderBottomStyle": true,
-              "borderTopStyle": true,
-              "borderLeftStyle": true,
-              "borderRightStyle": true,
-              "scrollbarWidth": true,
-              "overflowX": true,
-              "overflowY": true,
-              "userSelect": true,
-              "cursor": true,
-              "contain": true,
-              "pointerEvents": true,
-              "boxSizing": true,
-              "boxShadow": true,
-              "outlineStyle": true,
-              "outlineOffset": true,
-              "outlineWidth": true,
-              "touchAction": true
+              "shadowOpacity": true
             }
           }
         },
@@ -192,47 +163,20 @@
             "isText": true,
             "defaultProps": {
               "fontFamily": "unset",
-              "display": "inline",
-              "boxSizing": "border-box",
-              "wordWrap": "break-word",
-              "whiteSpace": "pre-wrap",
-              "margin": 0
+              "suppressHighlighting": true
             },
             "inlineWhenUnflattened": {},
             "variants": {
-              "numberOfLines": {
-                "1": {
-                  "maxWidth": "100%",
-                  "overflow": "hidden",
-                  "textOverflow": "ellipsis",
-                  "whiteSpace": "nowrap"
-                },
-                ":number": "Function"
-              },
-              "selectable": {
-                "true": {
-                  "userSelect": "text",
-                  "cursor": "text"
-                },
-                "false": {
-                  "userSelect": "none",
-                  "cursor": "default"
-                }
-              },
               "ellipse": {
                 "true": {
-                  "maxWidth": "100%",
-                  "overflow": "hidden",
-                  "textOverflow": "ellipsis",
-                  "whiteSpace": "nowrap"
+                  "numberOfLines": 1,
+                  "lineBreakMode": "clip"
                 }
               },
               "ellipsis": {
                 "true": {
-                  "maxWidth": "100%",
-                  "overflow": "hidden",
-                  "textOverflow": "ellipsis",
-                  "whiteSpace": "nowrap"
+                  "numberOfLines": 1,
+                  "lineBreakMode": "clip"
                 }
               }
             },
@@ -243,7 +187,6 @@
               "pressStyle": true,
               "focusStyle": true,
               "disabledStyle": true,
-              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -324,7 +267,6 @@
               "color": true,
               "textDecorationColor": true,
               "textShadowColor": true,
-              "outlineColor": true,
               "borderRadius": true,
               "borderTopLeftRadius": true,
               "borderTopRightRadius": true,
@@ -385,23 +327,6 @@
               "zoom": true,
               "scaleZ": true,
               "shadowOpacity": true,
-              "borderBottomStyle": true,
-              "borderTopStyle": true,
-              "borderLeftStyle": true,
-              "borderRightStyle": true,
-              "scrollbarWidth": true,
-              "overflowX": true,
-              "overflowY": true,
-              "userSelect": true,
-              "cursor": true,
-              "contain": true,
-              "pointerEvents": true,
-              "boxSizing": true,
-              "boxShadow": true,
-              "outlineStyle": true,
-              "outlineOffset": true,
-              "outlineWidth": true,
-              "touchAction": true,
               "fontFamily": true,
               "fontSize": true,
               "fontStyle": true,
@@ -412,30 +337,14 @@
               "textDecorationLine": true,
               "textDecorationStyle": true,
               "textShadowOffset": true,
-              "textShadowRadius": true,
-              "whiteSpace": true,
-              "wordWrap": true,
-              "textOverflow": true,
-              "textDecorationDistance": true,
-              "selectable": true,
-              "WebkitBoxOrient": true
+              "textShadowRadius": true
             }
           }
         },
         "View": {
           "staticConfig": {
             "acceptsClassName": true,
-            "defaultProps": {
-              "display": "flex",
-              "alignItems": "stretch",
-              "flexDirection": "column",
-              "flexBasis": "auto",
-              "boxSizing": "border-box",
-              "position": "relative",
-              "minHeight": 0,
-              "minWidth": 0,
-              "flexShrink": 0
-            },
+            "defaultProps": {},
             "validStyles": {
               "enterStyle": true,
               "exitStyle": true,
@@ -443,7 +352,6 @@
               "pressStyle": true,
               "focusStyle": true,
               "disabledStyle": true,
-              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -524,7 +432,6 @@
               "color": true,
               "textDecorationColor": true,
               "textShadowColor": true,
-              "outlineColor": true,
               "borderRadius": true,
               "borderTopLeftRadius": true,
               "borderTopRightRadius": true,
@@ -584,24 +491,7 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true,
-              "borderBottomStyle": true,
-              "borderTopStyle": true,
-              "borderLeftStyle": true,
-              "borderRightStyle": true,
-              "scrollbarWidth": true,
-              "overflowX": true,
-              "overflowY": true,
-              "userSelect": true,
-              "cursor": true,
-              "contain": true,
-              "pointerEvents": true,
-              "boxSizing": true,
-              "boxShadow": true,
-              "outlineStyle": true,
-              "outlineOffset": true,
-              "outlineWidth": true,
-              "touchAction": true
+              "shadowOpacity": true
             }
           }
         },
@@ -617,7 +507,6 @@
               "pressStyle": true,
               "focusStyle": true,
               "disabledStyle": true,
-              "focusVisibleStyle": true,
               "backfaceVisibility": true,
               "borderBottomEndRadius": true,
               "borderBottomStartRadius": true,
@@ -698,7 +587,6 @@
               "color": true,
               "textDecorationColor": true,
               "textShadowColor": true,
-              "outlineColor": true,
               "borderRadius": true,
               "borderTopLeftRadius": true,
               "borderTopRightRadius": true,
@@ -758,35 +646,9 @@
               "zIndex": true,
               "zoom": true,
               "scaleZ": true,
-              "shadowOpacity": true,
-              "borderBottomStyle": true,
-              "borderTopStyle": true,
-              "borderLeftStyle": true,
-              "borderRightStyle": true,
-              "scrollbarWidth": true,
-              "overflowX": true,
-              "overflowY": true,
-              "userSelect": true,
-              "cursor": true,
-              "contain": true,
-              "pointerEvents": true,
-              "boxSizing": true,
-              "boxShadow": true,
-              "outlineStyle": true,
-              "outlineOffset": true,
-              "outlineWidth": true,
-              "touchAction": true
+              "shadowOpacity": true
             },
             "defaultProps": {
-              "display": "flex",
-              "alignItems": "stretch",
-              "flexDirection": "column",
-              "flexBasis": "auto",
-              "boxSizing": "border-box",
-              "position": "relative",
-              "minHeight": 0,
-              "minWidth": 0,
-              "flexShrink": 0,
               "tag": "span",
               "size": true,
               "pointerEvents": "none"
