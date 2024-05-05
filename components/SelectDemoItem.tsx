@@ -9,7 +9,6 @@ import {
   getFontSize,
 } from "tamagui";
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
-import { items } from "@/app/(tabs)/posts_section";
 
 
 export function SelectDemoItem(props: SelectProps) {
@@ -143,3 +142,18 @@ export function SelectDemoItem(props: SelectProps) {
       </Select>
     );
   }
+
+export const items = [
+  { name: "Bac Math" },
+  { name: "Bac Economie et Gestion" },
+  { name: "2éme année" },
+  { name: "7 ème De base" },
+  { name: "2 ème Secondaire Informatique" },
+  { name: "3 ème Secondaire Techniques" },
+  { name: "3 ème secondaire Lettres" },
+  { name: "Bac Sciences Exp" },
+  { name: "Bac Reo Paramédical" },
+  { name: "3 ème Secondaire Mathématiques" },
+  { name: "السّادسة 6 ابتدائي" },
+  { name: "1 ère Secondaire" },
+];

@@ -65,72 +65,72 @@ export const posts = [
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
     thumbnailSrc:
       "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
+    description: "learning course",
     author: findUser("0001"),
-    name: "course",
+    name: "course 110",
     tags: ["bac sc", "bac math", "bac info"],
   },
   {
     videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
     thumbnailSrc:
       "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
+    description: "learning course",
     author: findUser("0001"),
-    name: "course",
+    name: "course 69",
     tags: ["bac sc", "bac math", "bac info"],
   },
   {
     videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
     thumbnailSrc:
       "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
+    description: "learning course",
     author: findUser("0001"),
-    name: "course",
+    name: "course 1",
     tags: ["bac sc", "bac math", "bac info"],
   },
   {
     videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
     thumbnailSrc:
       "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
+    description: "learning course",
     author: findUser("0001"),
-    name: "course",
+    name: "course 2",
     tags: ["bac sc", "bac math", "bac info"],
   },
   {
     videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
     thumbnailSrc:
       "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
+    description: "learning course",
     author: findUser("0001"),
-    name: "course",
+    name: "course 5",
     tags: ["bac sc", "bac math", "bac info"],
   },
   {
     videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
     thumbnailSrc:
       "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
+    description: "learning course",
     author: findUser("0001"),
-    name: "course",
+    name: "course 7",
     tags: ["bac sc", "bac math", "bac info"],
   },
   {
     videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
     thumbnailSrc:
       "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
+    description: "learning course",
     author: findUser("0001"),
-    name: "course",
+    name: "course 21",
     tags: ["bac sc", "bac math", "bac info"],
   },
   {
     videoSrc: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
     thumbnailSrc:
       "https://marketplace.canva.com/EAFf5rfnPgA/1/0/1600w/canva-blue-modern-eye-catching-vlog-youtube-thumbnail-LEcp-BYepDU.jpg",
-    description: "ssssss",
+    description: "learning course",
     author: findUser("0001"),
-    name: "course",
+    name: "course 18",
     tags: ["bac sc", "bac math", "bac info"],
   },
 ];
