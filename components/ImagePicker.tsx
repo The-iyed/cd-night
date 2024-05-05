@@ -27,7 +27,6 @@ export function ImagePickerExample({setImage, image}: ImagePickerProps) {
             <Pressable onPress={pickImage}>
 
                 <Image
-                    style={{cursor: "pointer"}}
                     source={{
                         width: 40,
                         height: 35,
