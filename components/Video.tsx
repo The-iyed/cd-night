@@ -15,8 +15,7 @@ export const VideoCard = ({
 }: any) => {
   const video = React.useRef<any>(null);
   const [status, setStatus] = React.useState<any>({});
-  const router = useRouter()
-
+  const router = useRouter();
 
   return (
     <View style={{ flexShrink: 1 }}>
@@ -94,9 +93,9 @@ export const VideoCard = ({
           </Text>
           <View style={styles.tagsContainer}>
             {tags.map((tag: string, index: number) => (
-              <Text key={index} style={styles.tag}>
-                {tag}
-              </Text>
+              <View key={index} style={styles.tag}>
+                <Text style={styles.tagText}>{tag}</Text>
+              </View>
             ))}
           </View>
         </View>
@@ -109,16 +108,17 @@ const styles = StyleSheet.create({
     maxWidth: Dimensions.get("window").width - 200,
     display: "flex",
     flexDirection: "row",
-    gap: 1,
+    gap: 3,
     flexWrap: "wrap",
   },
   tag: {
-    backgroundColor: "lightgray",
-
     padding: 5,
+    borderWidth: 1,
+    borderStyle: "dashed",
     borderRadius: 10,
     fontSize: 10,
   },
+  tagText: { fontSize: 10 },
   courseName: {
     fontSize: 15,
     fontWeight: "bold",

@@ -14,7 +14,7 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-const spModes = ["percent", "constant", "fit", "mixed"] as const;
+export const spModes = ["percent", "constant", "fit", "mixed"] as const;
 import * as DocumentPicker from "expo-document-picker";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { SelectDemoItem } from "@/components/SelectDemoItem";

@@ -6,6 +6,7 @@ import Colors from '@/constants/Colors';
 import {useColorScheme} from '@/components/useColorScheme';
 import {useClientOnlyValue} from '@/components/useClientOnlyValue';
 import { Signpost } from '@tamagui/lucide-icons';
+import { Video } from "@tamagui/lucide-icons";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -24,8 +25,7 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}
     >
-
-           <Tabs.Screen
+      <Tabs.Screen
         name="posts_section"
         options={{
           title: "Posts",
@@ -50,8 +50,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="home"
         options={{
-          title: "Loay",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Courses",
+          tabBarIcon: ({ color }) => <Video color={color} />,
         }}
       />
     </Tabs>

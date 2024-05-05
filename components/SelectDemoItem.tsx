@@ -25,7 +25,7 @@ export function SelectDemoItem(props: SelectProps) {
         <Select.Trigger width={280} iconAfter={ChevronDown}>
           <Select.Value placeholder="Something" />
         </Select.Trigger>
-  
+
         <Adapt when="sm" platform="touch">
           <Sheet
             native={!!props.native}
@@ -50,7 +50,7 @@ export function SelectDemoItem(props: SelectProps) {
             />
           </Sheet>
         </Adapt>
-  
+
         <Select.Content zIndex={200000}>
           <Select.ScrollUpButton
             alignItems="center"
@@ -71,7 +71,7 @@ export function SelectDemoItem(props: SelectProps) {
               borderRadius="$4"
             />
           </Select.ScrollUpButton>
-  
+
           <Select.Viewport
             // to do animations:
             // animation="quick"
@@ -119,7 +119,7 @@ export function SelectDemoItem(props: SelectProps) {
               </YStack>
             )}
           </Select.Viewport>
-  
+
           <Select.ScrollDownButton
             alignItems="center"
             justifyContent="center"
