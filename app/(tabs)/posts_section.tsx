@@ -1,9 +1,35 @@
-import { Typewriter } from '@/components/typeWriter';
-import axios from 'axios';
-import { ImagePickerAsset } from 'expo-image-picker/src/ImagePicker.types';
-import { useState } from 'react';
+import { SetStateAction, useMemo, useState } from "react";
+import {
+  Button,
+  Input,
+  Label,
+  ScrollView,
+  Sheet,
+  Text,
+  TextArea,
+  View,
+  XStack,
+  YStack,
+} from "tamagui";
+const spModes = ["percent", "constant", "fit", "mixed"] as const;
+import * as DocumentPicker from "expo-document-picker";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { SelectDemoItem } from "@/components/SelectDemoItem";
+import {
+  Toast,
+  ToastProvider,
+  ToastViewport,
+  useToastState,
+} from "@tamagui/toast";
 
-export default function Posts() {
+import { useToastController } from "@tamagui/toast";
+
+import React from "react";
+
+import { Switch } from "tamagui";
+import { addPost } from "@/store/slices/postsSlice";
+
+export default function PostsSection() {
   const [open, setOpen] = useState<boolean>(false);
   const [modal, setModal] = useState(true);
   const [snapPointsMode, setSnapPointsMode] =
@@ -54,15 +80,9 @@ export default function Posts() {
     if (
       !title.trim() ||
       !description.trim ||
-      selectedFiles?.length == 0 || !levelValue.trim()
+      selectedFiles?.length == 0 ||
+      !levelValue.trim()
     ) {
-      setNative(true);
-    console.log({
-        title,
-        description,
-        selectedFiles,
-        levelValue
-    })
       if (toast)
         toast.show("Please Check you form", {
           message: "Help",
@@ -79,9 +99,8 @@ export default function Posts() {
           levelValue,
         })
       );
-         setOpen(false);
-
-    } 
+      setOpen(false);
+    }
   };
   const data = useAppSelector((state) => state.posts);
   const currentToast = useToastState();
@@ -109,6 +128,7 @@ export default function Posts() {
         Welcome to posts section where you can share your knowledge with your
         friends
       </Text>
+      
       <View
         style={{
           display: "flex",
@@ -125,10 +145,10 @@ export default function Posts() {
           onPress={() => setOpen(true)}
         >
           + Add Post
-        </Button>
-      </View>
+        </Button>     
 
-      <Sheet
+      </View>
+     {open &&  <Sheet
         forceRemoveScrollEnabled={open}
         modal={modal}
         open={open}
@@ -196,7 +216,12 @@ export default function Posts() {
                 Title
               </Label>
               <YStack flex={1} space={"$1"}>
-                <Input flex={1} id="title" defaultValue="" onChangeText={(e)=>setTitle(e)} />
+                <Input
+                  flex={1}
+                  id="title"
+                  defaultValue=""
+                  onChangeText={(e) => setTitle(e)}
+                />
               </YStack>
             </XStack>
             <XStack ai="center" gap="$4">
@@ -289,7 +314,27 @@ export default function Posts() {
             </View>
           </ScrollView>
         </Sheet.Frame>
-      </Sheet>
+      </Sheet>         
+      }
+           <Text
+        style={{ textAlign: "center", width: "100%", fontWeight: "300" }}
+        marginTop={15}
+        fontSize={"$4"}
+      >
+        Welcome to posts section where you can share your knowledge with your
+        friends
+      </Text>
+      <Text color={"white"}>lsqjdmfmqsdlkfjlkqjsdmlkfjqmsldkjmflkqjsmdlkjflmqksjdf</Text>
+      <YStack space={"$3"}>
+        {
+          data?.data.map((el:any,index:number)=>{
+            console.log('===>',el)
+            return <XStack flex={1} key={index}>
+                <Text color={"white"}>{el?.description}</Text>
+            </XStack>
+          })
+        }
+      </YStack>
     </View>
   );
 }
