@@ -5,6 +5,7 @@ import { Pressable } from "react-native";
 import Colors from '@/constants/Colors';
 import {useColorScheme} from '@/components/useColorScheme';
 import {useClientOnlyValue} from '@/components/useClientOnlyValue';
+import { Video } from "@tamagui/lucide-icons";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -49,7 +50,7 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "Courses",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <Video color={color} />,
         }}
       />
     </Tabs>
