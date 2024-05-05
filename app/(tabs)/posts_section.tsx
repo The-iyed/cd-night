@@ -316,15 +316,8 @@ export default function PostsSection() {
         </Sheet.Frame>
       </Sheet>         
       }
-           <Text
-        style={{ textAlign: "center", width: "100%", fontWeight: "300" }}
-        marginTop={15}
-        fontSize={"$4"}
-      >
-        Welcome to posts section where you can share your knowledge with your
-        friends
-      </Text>
-      <Text color={"white"}>lsqjdmfmqsdlkfjlkqjsdmlkfjqmsldkjmflkqjsmdlkjflmqksjdf</Text>
+ 
+
       <YStack space={"$3"}>
         {
           data?.data.map((el:any,index:number)=>{
@@ -339,10 +332,6 @@ export default function PostsSection() {
   );
 }
 
-export const items = [
-  { name: "Bac Math" },
-  { name: "Bac Economie et Gestion" },
-];
 
 const CurrentToast = () => {
   const currentToast = useToastState();
@@ -370,75 +359,20 @@ const CurrentToast = () => {
     </Toast>
   );
 };
-const ToastControl = ({
-  native,
-  message,
-}: {
-  native: boolean;
-  message?: string;
-}) => {
-  const toast = useToastController();
+;
 
-  return (
-    <XStack space="$2" justifyContent="center">
-      <Button
-        onPress={() => {
-          toast.show("Success !", {
-            message: message || "Everything in order",
-            native,
-          });
-        }}
-      >
-        Show
-      </Button>
 
-      <Button
-        onPress={() => {
-          toast.hide();
-        }}
-      >
-        Hide
-      </Button>
-    </XStack>
-  );
-};
-const NativeOptions = ({
-  native,
-
-  setNative,
-}: {
-  native: boolean;
-
-  setNative: (native: boolean) => void;
-}) => {
-  return (
-    <XStack space="$3">
-      <Label size="$1" onPress={() => setNative(false)}>
-        Custom
-      </Label>
-
-      <Switch
-        id="native-toggle"
-        nativeID="native-toggle"
-        theme="active"
-        size="$1"
-        checked={!!native}
-        onCheckedChange={(val) => setNative(val)}
-      >
-        <Switch.Thumb
-          animation={[
-            "quick",
-            {
-              transform: {
-                overshootClamping: true,
-              },
-            },
-          ]}
-        />
-      </Switch>
-      <Label size="$1" onPress={() => setNative(true)}>
-        Native
-      </Label>
-    </XStack>
-  );
-};
+export const items = [
+  { name: "Bac Math" },
+  { name: "Bac Economie et Gestion" },
+  { name: "2éme année" },
+  { name: "7 ème De base" },
+  { name: "2 ème Secondaire Informatique"},
+  { name: "3 ème Secondaire Techniques"},
+  { name: "3 ème secondaire Lettres"},
+  { name: "Bac Sciences Exp"},
+  { name: "Bac Reo Paramédical"},
+  { name: "3 ème Secondaire Mathématiques"},
+  { name: "السّادسة 6 ابتدائي" },
+  { name: "1 ère Secondaire"}
+];

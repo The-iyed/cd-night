@@ -23,13 +23,7 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}
     >
-      <Tabs.Screen
-        name="posts"
-        options={{
-          title: "Iyed",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
+
            <Tabs.Screen
         name="posts_section"
         options={{
