@@ -9,7 +9,7 @@ import {
   getFontSize,
 } from "tamagui";
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
-import { items } from "@/app/(tabs)/posts";
+import { items } from "@/app/(tabs)/posts_section";
 
 
 export function SelectDemoItem(props: SelectProps) {

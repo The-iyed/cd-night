@@ -26140,9 +26140,9 @@ var init_vanilla = __esm({
   }
 });
 
-// node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js
+// node_modules/zustand/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js
 var require_use_sync_external_store_shim_production_min = __commonJS({
-  "node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js"(exports2) {
+  "node_modules/zustand/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.production.min.js"(exports2) {
     "use strict";
     var e = require("react");
     function h(a, b) {
@@ -26191,9 +26191,9 @@ var require_use_sync_external_store_shim_production_min = __commonJS({
   }
 });
 
-// node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
+// node_modules/zustand/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js
 var require_use_sync_external_store_shim_development = __commonJS({
-  "node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports2) {
+  "node_modules/zustand/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim.development.js"(exports2) {
     "use strict";
     if (process.env.NODE_ENV !== "production") {
       (function() {
@@ -26319,9 +26319,9 @@ var require_use_sync_external_store_shim_development = __commonJS({
   }
 });
 
-// node_modules/use-sync-external-store/shim/index.js
+// node_modules/zustand/node_modules/use-sync-external-store/shim/index.js
 var require_shim = __commonJS({
-  "node_modules/use-sync-external-store/shim/index.js"(exports2, module2) {
+  "node_modules/zustand/node_modules/use-sync-external-store/shim/index.js"(exports2, module2) {
     "use strict";
     if (process.env.NODE_ENV === "production") {
       module2.exports = require_use_sync_external_store_shim_production_min();
@@ -26331,9 +26331,9 @@ var require_shim = __commonJS({
   }
 });
 
-// node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.production.min.js
+// node_modules/zustand/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.production.min.js
 var require_with_selector_production_min = __commonJS({
-  "node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.production.min.js"(exports2) {
+  "node_modules/zustand/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.production.min.js"(exports2) {
     "use strict";
     var h = require("react");
     var n = require_shim();
@@ -26395,9 +26395,9 @@ var require_with_selector_production_min = __commonJS({
   }
 });
 
-// node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js
+// node_modules/zustand/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js
 var require_with_selector_development = __commonJS({
-  "node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js"(exports2) {
+  "node_modules/zustand/node_modules/use-sync-external-store/cjs/use-sync-external-store-shim/with-selector.development.js"(exports2) {
     "use strict";
     if (process.env.NODE_ENV !== "production") {
       (function() {
@@ -26487,9 +26487,9 @@ var require_with_selector_development = __commonJS({
   }
 });
 
-// node_modules/use-sync-external-store/shim/with-selector.js
+// node_modules/zustand/node_modules/use-sync-external-store/shim/with-selector.js
 var require_with_selector = __commonJS({
-  "node_modules/use-sync-external-store/shim/with-selector.js"(exports2, module2) {
+  "node_modules/zustand/node_modules/use-sync-external-store/shim/with-selector.js"(exports2, module2) {
     "use strict";
     if (process.env.NODE_ENV === "production") {
       module2.exports = require_with_selector_production_min();
@@ -35365,10 +35365,10 @@ function getBoundingClientRect(element, includeScale, isFixedStrategy, offsetPar
 }
 __name(getBoundingClientRect, "getBoundingClientRect");
 var topLayerSelectors = [":popover-open", ":modal"];
-function isTopLayer(floating) {
+function isTopLayer(element) {
   return topLayerSelectors.some((selector) => {
     try {
-      return floating.matches(selector);
+      return element.matches(selector);
     } catch (e) {
       return false;
     }
@@ -35544,7 +35544,7 @@ function getClippingRect(_ref) {
     rootBoundary,
     strategy
   } = _ref;
-  const elementClippingAncestors = boundary === "clippingAncestors" ? getClippingElementAncestors(element, this._c) : [].concat(boundary);
+  const elementClippingAncestors = boundary === "clippingAncestors" ? isTopLayer(element) ? [] : getClippingElementAncestors(element, this._c) : [].concat(boundary);
   const clippingAncestors = [...elementClippingAncestors, rootBoundary];
   const firstClippingAncestor = clippingAncestors[0];
   const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor) => {
@@ -35606,6 +35606,10 @@ function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
   };
 }
 __name(getRectRelativeToOffsetParent, "getRectRelativeToOffsetParent");
+function isStaticPositioned(element) {
+  return getComputedStyle2(element).position === "static";
+}
+__name(isStaticPositioned, "isStaticPositioned");
 function getTrueOffsetParent(element, polyfill) {
   if (!isHTMLElement(element) || getComputedStyle2(element).position === "fixed") {
     return null;
@@ -35617,18 +35621,28 @@ function getTrueOffsetParent(element, polyfill) {
 }
 __name(getTrueOffsetParent, "getTrueOffsetParent");
 function getOffsetParent(element, polyfill) {
-  const window2 = getWindow(element);
-  if (!isHTMLElement(element) || isTopLayer(element)) {
-    return window2;
+  const win = getWindow(element);
+  if (isTopLayer(element)) {
+    return win;
+  }
+  if (!isHTMLElement(element)) {
+    let svgOffsetParent = getParentNode(element);
+    while (svgOffsetParent && !isLastTraversableNode(svgOffsetParent)) {
+      if (isElement(svgOffsetParent) && !isStaticPositioned(svgOffsetParent)) {
+        return svgOffsetParent;
+      }
+      svgOffsetParent = getParentNode(svgOffsetParent);
+    }
+    return win;
   }
   let offsetParent = getTrueOffsetParent(element, polyfill);
-  while (offsetParent && isTableElement(offsetParent) && getComputedStyle2(offsetParent).position === "static") {
+  while (offsetParent && isTableElement(offsetParent) && isStaticPositioned(offsetParent)) {
     offsetParent = getTrueOffsetParent(offsetParent, polyfill);
   }
-  if (offsetParent && (getNodeName(offsetParent) === "html" || getNodeName(offsetParent) === "body" && getComputedStyle2(offsetParent).position === "static" && !isContainingBlock(offsetParent))) {
-    return window2;
+  if (offsetParent && isLastTraversableNode(offsetParent) && isStaticPositioned(offsetParent) && !isContainingBlock(offsetParent)) {
+    return win;
   }
-  return offsetParent || getContainingBlock(element) || window2;
+  return offsetParent || getContainingBlock(element) || win;
 }
 __name(getOffsetParent, "getOffsetParent");
 var getElementRects = /* @__PURE__ */ __name(async function(data) {
