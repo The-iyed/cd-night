@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { ResizeMode, Video } from "expo-av";
-import { Button, Image, Text, View } from "tamagui";
+import { Avatar, Button, Image, Paragraph, Text, Tooltip, View } from "tamagui";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 export const VideoCard = ({
@@ -14,12 +14,13 @@ export const VideoCard = ({
   const video = React.useRef<any>(null);
   const [status, setStatus] = React.useState<any>({});
   return (
-    <View>
+    <View style={{ flexShrink: 1 }}>
       <Video
         ref={video}
         onFullscreenUpdate={(status) => {
           if (status.fullscreenUpdate === 3) {
             video?.current?.pauseAsync();
+            setStatus(() => ({}));
           }
         }}
         style={status.isPlaying ? styles.video : styles.displayNone}
@@ -31,25 +32,72 @@ export const VideoCard = ({
         onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
 
-      <Button
-        style={styles.container}
-        onTouchEnd={() => {
-          video?.current?.playAsync();
-          video?.current?.presentFullscreenPlayer();
-        }}
-      >
-        <Image style={styles.thumbnail} src={thumbnailSrc} />
-        {/* <AntDesign name="play" size={24} color="black" /> */}
+      <View style={styles.container}>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            height: 150,
+            gap: 10,
+            justifyContent: "start",
+            alignItems: "flex-start",
+          }}
+        >
+          <View style={{ position: "relative" }}>
+            <View
+              onTouchEnd={() => {
+                video?.current?.playAsync();
+                video?.current?.presentFullscreenPlayer();
+              }}
+              style={{ position: "relative", height: 100 }}
+            >
+              <Image style={styles.thumbnail} src={thumbnailSrc} />
+              <AntDesign
+                style={{
+                  zIndex: 10,
+                  position: "absolute",
+                  top: "40%",
+                  left: "40%",
+                }}
+                name="play"
+                size={24}
+                color="white"
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Avatar circular size="$2">
+              <Avatar.Image
+                accessibilityLabel="Cam"
+                src="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
+              />
+            </Avatar>
+            <Text style={{ fontSize: 10 }}>teacher name</Text>
+          </View>
+        </View>
         <View style={styles.detailsContainer}>
           <Text style={styles.courseName}>{name}</Text>
-          <Text>{description}</Text>
+          <Text>
+            <Tooltip>
+              <Text style={styles.description}>{description}</Text>
+            </Tooltip>
+          </Text>
           <View style={styles.tagsContainer}>
             {tags.map((tag: string, index: number) => (
-              <Text style={styles.tag}>{tag}</Text>
+              <Text key={index} style={styles.tag}>
+                {tag}
+              </Text>
             ))}
           </View>
         </View>
-      </Button>
+      </View>
     </View>
   );
 };
@@ -69,23 +117,32 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   courseName: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
+  },
+  description: {
+    fontSize: 10,
+    fontWeight: "normal",
   },
   detailsContainer: {
     display: "flex",
     flexDirection: "column",
+    gap: 5,
+    width: Dimensions.get("window").width - 200,
   },
   container: {
     alignItems: "flex-start",
+    padding: 10,
     display: "flex",
-    height: "100%",
+    justifyContent: "flex-start",
+    maxHeight: 150,
+    width: Dimensions.get("window").width,
     flexDirection: "row",
-    gap: 1,
+    gap: 5,
   },
   thumbnail: {
-    width: 170,
-    height: "100%",
+    width: 150,
+    height: 100,
     objectFit: "cover",
     borderRadius: 10,
   },
