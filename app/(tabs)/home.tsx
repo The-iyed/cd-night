@@ -148,7 +148,7 @@ export default () => {
             <YStack
               paddingTop={10}
               height={"80%"}
-              gap={20}
+              gap={70}
               display="flex"
               justifyContent="flex-start"
               alignItems="flex-start"
