@@ -39,7 +39,7 @@ export default function TabTwoScreen() {
       </Button>
     </XStack>
   );
-  console.log(chatMessage)
+  console.log(chatMessage);
   return (
     <View style={styles.container}>
       <Popover size="$5" allowFlip>
@@ -93,7 +93,7 @@ export default function TabTwoScreen() {
                     maxWidth: "300px",
                     textAlign: "center",
                   }}>
-                    {activePage && ReturnBtn}
+                  {activePage && ReturnBtn}
                   {!activePage
                     ? "Hi , How can i assist you"
                     : activePage === "videos"
@@ -189,7 +189,6 @@ export default function TabTwoScreen() {
                     />
                     <Pressable
                       onPress={async () => {
-                        console.log('asba')
                         if (!files) return;
                         const res = await callChatGpt({
                           ...files,
