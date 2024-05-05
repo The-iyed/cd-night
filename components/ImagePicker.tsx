@@ -13,9 +13,7 @@ export  function ImagePickerExample({setImage,image}: ImagePickerProps) {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
+      quality: 0.8,
       base64:true
     });
 
@@ -40,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   image: {
-    width: 200,
-    height: 200,
+    width: "100%",
+    height: 100,
   },
 });
