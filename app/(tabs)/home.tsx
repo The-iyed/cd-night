@@ -4,11 +4,13 @@ import { ResizeMode, Video } from "expo-av";
 import { VideoCard } from "@/components/Video";
 import { Input, ScrollView, YStack } from "tamagui";
 import Colors from "@/constants/Colors";
+import CameraComp from "@/components/Camera";
 
 export default () => {
   const [videos, setVideos] = React.useState(allVideos);
   return (
     <View>
+      <CameraComp />
       <Input
         placeholder="Search "
         size="$4"
